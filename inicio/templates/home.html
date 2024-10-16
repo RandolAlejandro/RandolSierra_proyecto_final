@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>BUSCAR DISPOSITIVO</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ search_form.as_p }}
+    <button type="submit" name="search">Buscar</button>
+</form>
+
+<ul>
+    {% for item in items %}
+        <li>{{ item.name }}: {{ item.description }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'inicio:add_item' %}">Ir a Agregar</a>
+{% endblock %}

@@ -1,52 +1,28 @@
-from django.http import HttpResponse
-from django.template import Template, Context, loader
-from datetime import datetime
-from django.shortcuts import render
-from inicio.models import Auto
+from django.shortcuts import render, redirect
+from inicio.models import Item
+from inicio.forms import ItemForm, SearchForm
 
-def mi_vista(request):
-    return HttpResponse("Hola soy la vista")
+def home(request):
+    items = Item.objects.all()
+    search_form = SearchForm()
 
-def inicio(request):
-    # return HttpResponse("<h1>Soy la pantalla de inicio</h1>")
-    return render(request, "index.html")
+    if request.method == 'POST' and 'search' in request.POST:
+        search_form = SearchForm(request.POST)
+        if search_form.is_valid():
+            query = search_form.cleaned_data['query']
+            items = Item.objects.filter(name__icontains=query)
 
-def vista_datos1(request, nombre):
-    nombre_mayuscula = nombre.upper()
-    return HttpResponse(f"Hola {nombre_mayuscula}!!")
+    return render(request, 'home.html', {'items': items, 'form': ItemForm(), 'search_form': search_form})
 
-def primer_template(request):
-    
-    with open(r"templates\primer_template.html") as archivo_del_template:
-        template = Template(archivo_del_template.read())
- 
-    contexto = Context()
-    
-    render_template = template.render(contexto)
-    
-    return HttpResponse(render_template)
+def add_item(request):
+    if request.method == 'POST':
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inicio:home')
+    else:
+        form = ItemForm()
+    return render(request, 'add_item.html', {'form': form})
 
-def segundo_template(request):
-    
-    fecha_actual = datetime.now()
-    datos = {
-        "fecha_actual": fecha_actual,
-        "numeros": list(range(1, 11))
-    }
-    
-    # with open(r"templates\segundo_template.html") as archivo_del_template:
-    #     template = Template(archivo_del_template.read())
-    # contexto = Context(datos)
-    # render_template = template.render(contexto)
-    
-    # template = loader.get_template("segundo_template.html")
-    # render_template = template.render(datos)
-    # return HttpResponse(render_template)
-
-    return render(request, "segundo_template.html", datos)
-
-def crear_auto(request, marca, modelo, anio):
-    
-    auto = Auto(marca=marca, modelo=modelo, anio=anio)
-    auto.save()
-    return render(request, "creacion_auto_correcta.html", {"auto": auto})
+def about(request):
+    return render(request, 'about.html')
