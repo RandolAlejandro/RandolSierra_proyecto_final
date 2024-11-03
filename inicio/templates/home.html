@@ -1,18 +1,17 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h1>BUSCAR DISPOSITIVO</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ search_form.as_p }}
-    <button type="submit" name="search">Buscar</button>
-</form>
-
+{% if items %}
 <ul>
     {% for item in items %}
-        <li>{{ item.name }}: {{ item.description }}</li>
+        <li>{{ item.name }}:
+            <a href={% url "inicio:ver_mas" item.id %}>Ver</a> |
+            <a href={% url "inicio:editar" item.id %}>Editar</a> |
+            <a href={% url "inicio:eliminar" item.id %}>Eliminar</a>
+        </li>
     {% endfor %}
 </ul>
-
-<a href="{% url 'inicio:add_item' %}">Ir a Agregar</a>
+{% else %}
+<p>No hay dispositivos</p>
+{% endif %}
+<a href="{% url 'inicio:add_item' %}">Agregar dispositivos</a>
 {% endblock %}

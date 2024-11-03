@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<form action={% url "home:eliminar" item.id %} method="post">
+    {% csrf_token %}
+    <p>Desea eliminar el dispositivo {{item}}?</p>
+    <input type="submit" value="Confirmar">
+</form>
+<ul></ul>
+<a href="{% url 'inicio:home' %}">Cancelar</a>
+{% endblock %}

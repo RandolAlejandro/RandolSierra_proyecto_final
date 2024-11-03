@@ -24,9 +24,26 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="navbar-brand" href={% url "inicio:home" %}>Inicio</a>
-                <a class="navbar-brand" href={% url "inicio:add_item" %}>Agregar</a>
-                <a class="navbar-brand" href={% url "inicio:about" %}>Sobre Mí</a>
+                <a class="navbar-brand" href={% url "inicio:home" %}>Dispositivos</a>
+                <a class="navbar-brand" href={% url "inicio:add_item" %}>Crear Dispositivos</a>
+                <a class="navbar-brand" href={% url "inicio:about" %}>Acerca de mi</a>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'mensajeria:enviar_mensaje' %}">Enviar Mensaje</a></li>
+                <li><a href="{% url 'mensajeria:bandeja_entrada' %}">Bandeja de Entrada</a></li>
+                <a class="navbar-brand" href="{% url 'usuarios:editar_perfil' %}">
+                    {% if request.user.avatar %}
+                        <img src="{{ request.user.avatar.url }}" alt="" height="30px">
+                    {% endif %}
+                    {{ request.user.username }}
+                </a>
+                <form action="{% url 'usuarios:logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-secondary" value="Cerrar Sesión">
+                </form>
+            {% else %}
+                <a class="btn btn-dark" href="{% url 'usuarios:registro' %}">Registrarse</a>
+                <a class="btn btn-primary" href="{% url 'usuarios:login' %}">Iniciar Sesión</a>
+            {% endif %}            
             </div>
         </nav>
         <!-- Masthead-->
@@ -38,7 +55,7 @@
                         <div class="text-center text-white">
                             <!-- Page heading-->
                             <h1 class="mb-5">
-                                {% block h1_header %}Mi Proyecto Django{% endblock h1_header %}
+                                {% block h1_header %}Mi Proyecto Final Django{% endblock h1_header %}
                             </h1>
                             <!-- Signup form-->
                             <!-- * * * * * * * * * * * * * * *-->

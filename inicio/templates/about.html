@@ -1,12 +1,11 @@
 {% extends "base.html" %}
-
-{% block title %}Sobre Mí{% endblock %}
-
 {% block content %}
-    <h1>SOBRE MÍ</h1>
     <ul>
         <li><strong>Autor:</strong> Randol Sierra </li>
         <li><strong>Correo:</strong> randolalejandro92@gmail.com </li>
-        <li><strong>GitHub:</strong> <a href="[tu-github-url]">https://github.com/RandolAlejandro/proyecto_final_venv</a></li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/RandolAlejandro/proyecto_final_venv" target="_blank">https://github.com/RandolAlejandro/proyecto_final_venv</a></li>
+        <li><strong>Video Proyecto final:</strong> <a href="https://youtu.be/HON7ZkCljnl?feature=shared" target="_blank">https://youtu.be/HON7ZkCljnl?feature=shared</a></li>
+
     </ul>
+    <a href="{% url 'usuarios:login' %}">Volver a Iniciar sesión</a>
 {% endblock %}

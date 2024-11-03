@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<form action={% url "usuarios:editar_perfil" %} method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{form}}
+<input type="submit" value="Confirmar">
+</form>
+<ul></ul>
+<a href="{% url 'usuarios:editar_contraseña' %}">Cambiar contraseña</a>
+{% endblock %}

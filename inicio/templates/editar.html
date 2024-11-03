@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="post">
+<form action={% url "home:editar" item.id %} method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Crear</button>
+    {{form}}
+    <input type="submit" value="Editar">
 </form>
 <ul></ul>
 <a href="{% url 'inicio:home' %}">Volver a dispositivos</a>

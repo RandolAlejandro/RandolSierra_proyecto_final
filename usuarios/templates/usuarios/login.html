@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<form action={% url "usuarios:login" %} method="post">
+{% csrf_token %}
+{{form}}
+<input type="submit" value="Iniciar Sesión">
+</form>
+{% endblock %}

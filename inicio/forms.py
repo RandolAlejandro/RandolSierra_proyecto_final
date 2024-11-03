@@ -1,10 +1,10 @@
 from django import forms
 from .models import Item
+from django.urls import reverse_lazy
 
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['name', 'description']
-
-class SearchForm(forms.Form):
-    query = forms.CharField(label='', max_length=100)
+        fields = ['name', 'anio']
+        success_url = reverse_lazy("inicio:home")
+    

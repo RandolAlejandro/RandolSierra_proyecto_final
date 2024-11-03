@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<ul>
+    <li>Name: {{item.name}}</li>
+    <li>Año: {{item.anio}}</li>
+</ul>
+<a href="{% url 'inicio:home' %}">Volver a dispositivos</a>
+{% endblock %}
